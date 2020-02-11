@@ -1,62 +1,184 @@
-"use strict";
 
-function make_main_game_state( game )
-{
-    function preload() {
-        // Load an image and call it 'logo'.
-        game.load.image( 'logo', 'assets/phaser.png' );
-    }
-    
-    var bouncy;
-    
-    function create() {
-        // Create a sprite at the center of the screen using the 'logo' image.
-        bouncy = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
-        // Anchor the sprite at its center, as opposed to its top-left corner.
-        // so it will be truly centered.
-        bouncy.anchor.setTo( 0.5, 0.5 );
-        
-        // Turn on the arcade physics engine for this sprite.
-        game.physics.enable( bouncy, Phaser.Physics.ARCADE );
-        // Make it bounce off of the world bounds.
-        bouncy.body.collideWorldBounds = true;
-        
-        // Add some text using a CSS style.
-        // Center it in X, and position its top 15 pixels from the top of the world.
-        var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        var text = game.add.text( game.world.centerX, 15, "Build something amazing.", style );
-        text.anchor.setTo( 0.5, 0.0 );
-    }
-    
-    function update() {
-        // Accelerate the 'logo' sprite towards the cursor,
-        // accelerating at 500 pixels/second and moving no faster than 500 pixels/second
-        // in X or Y.
-        // This function returns the rotation angle that makes it visually match its
-        // new trajectory.
-        bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, game.input.activePointer, 500, 500, 500 );
-    }
-    
-    return { "preload": preload, "create": create, "update": update };
-}
+Gamepad Game Mechanic Explorer
 
+A collection of concrete examples for various game mechanics, algorithms, and effects. The examples are all implemented in JavaScript using the Phaser game framework, but the concepts and methods are general and can be adapted to any engine. Think of it as pseudocode. Each section contains several different examples that progress in sequence from a very basic implementation to a more advanced implementation. Every example is interactive and responds to keyboard or mouse input (or touch).
+Follow @yafd on Twitter for updates.
 
-window.onload = function() {
-    // You might want to start with a template that uses GameStates:
-    //     https://github.com/photonstorm/phaser/tree/v2.6.2/resources/Project%20Templates/Basic
-    
-    // You can copy-and-paste the code from any of the examples at http://examples.phaser.io here.
-    // You will need to change the fourth parameter to "new Phaser.Game()" from
-    // 'phaser-example' to 'game', which is the id of the HTML element where we
-    // want the game to go.
-    // The assets (and code) can be found at: https://github.com/photonstorm/phaser/tree/master/examples/assets
-    // You will need to change the paths you pass to "game.load.image()" or any other
-    // loading functions to reflect where you are putting the assets.
-    // All loading functions will typically all be found inside "preload()".
-    
-    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game' );
-    
-    game.state.add( "main", make_main_game_state( game ) );
-    
-    game.state.start( "main" );
+    Basic movement
+    With drag
+    With gravity
+    Lunar lander
+
+Discover Phaser by Thomas Palef Learn to make your own HTML5 games with Phaser
+
+Questions, corrections, want to hire me? Contact me on Twitter or email.
+
+Copyright © 2018 John Watson
+
+The example source code is licensed under the terms of the MIT License. Art assets in the examples are licensed under the Creative Commons Attribution license (CC BY 3.0).
+
+Download all assets
+
+More demos are planned. Follow me on Twitter for updates.
+
+Changelog
+
+This site requires a modern web browser that supports HTML5. I recommend Chrome and Firefox.
+
+    Spaceship motionWith gravity
+
+Notes
+
+Use the left and right arrow keys or tap near the edges to rotate the ship. Press the up arrow key or tap the center to turn on the engine.
+
+The world now has gravity and a ground you can land on. The ship's ACCELERATION must be stronger than GRAVITY or it will never be able to move up.
+Source
+
+// This example uses the Phaser 2.2.2 framework
+
+// Copyright © 2014 John Watson
+// Licensed under the terms of the MIT License
+
+var GameState = function(game) {
 };
+
+// Load images and sounds
+GameState.prototype.preload = function() {
+    this.game.load.spritesheet('ship', '/assets/gfx/ship.png', 32, 32);
+    this.game.load.image('ground', '/assets/gfx/ground.png');
+};
+
+// Setup the example
+GameState.prototype.create = function() {
+    // Set stage background color
+    this.game.stage.backgroundColor = 0x333333;
+
+    // Define motion constants
+    this.ROTATION_SPEED = 180; // degrees/second
+    this.ACCELERATION = 200; // pixels/second/second
+    this.MAX_SPEED = 250; // pixels/second
+    this.DRAG = 25; // pixels/second
+    this.GRAVITY = 100; // pixels/second/second
+
+    // Add the ship to the stage
+    this.ship = this.game.add.sprite(this.game.width/2, this.game.height/2, 'ship');
+    this.ship.anchor.setTo(0.5, 0.5);
+    this.ship.angle = -90; // Point the ship up
+
+    // Enable physics on the ship
+    this.game.physics.enable(this.ship, Phaser.Physics.ARCADE);
+
+    // Set maximum velocity
+    this.ship.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
+
+    // Add drag to the ship that slows it down when it is not accelerating
+    this.ship.body.drag.setTo(this.DRAG, this.DRAG); // x, y
+
+    // Turn on gravity
+    game.physics.arcade.gravity.y = this.GRAVITY;
+
+    // Make ship bounce a little
+    this.ship.body.bounce.setTo(0.25, 0.25);
+
+    // Create some ground for the ship to land on
+    this.ground = this.game.add.group();
+    for(var x = 0; x < this.game.width; x += 32) {
+        // Add the ground blocks, enable physics on each, make them immovable
+        var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+        this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+        groundBlock.body.immovable = true;
+        groundBlock.body.allowGravity = false;
+        this.ground.add(groundBlock);
+    }
+
+    // Capture certain keys to prevent their default actions in the browser.
+    // This is only necessary because this is an HTML5 game. Games on other
+    // platforms may not need code like this.
+    this.game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.UP,
+        Phaser.Keyboard.DOWN
+    ]);
+};
+
+// The update() method is called every frame
+GameState.prototype.update = function() {
+    // Collide the ship with the ground
+    this.game.physics.arcade.collide(this.ship, this.ground);
+
+    // Keep the ship on the screen
+    if (this.ship.x > this.game.width) this.ship.x = 0;
+    if (this.ship.x < 0) this.ship.x = this.game.width;
+
+    if (this.leftInputIsActive()) {
+        // If the LEFT key is down, rotate left
+        this.ship.body.angularVelocity = -this.ROTATION_SPEED;
+    } else if (this.rightInputIsActive()) {
+        // If the RIGHT key is down, rotate right
+        this.ship.body.angularVelocity = this.ROTATION_SPEED;
+    } else {
+        // Stop rotating
+        this.ship.body.angularVelocity = 0;
+    }
+
+    if (this.upInputIsActive()) {
+        // If the UP key is down, thrust
+        // Calculate acceleration vector based on this.angle and this.ACCELERATION
+        this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
+        this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
+
+        // Show the frame from the spritesheet with the engine on
+        this.ship.frame = 1;
+    } else {
+        // Otherwise, stop thrusting
+        this.ship.body.acceleration.setTo(0, 0);
+
+        // Show the frame from the spritesheet with the engine off
+        this.ship.frame = 0;
+    }
+};
+
+// This function should return true when the player activates the "go left" control
+// In this case, either holding the right arrow or tapping or clicking on the left
+// side of the screen.
+GameState.prototype.leftInputIsActive = function() {
+    var isActive = false;
+
+    isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+    isActive |= (this.game.input.activePointer.isDown &&
+        this.game.input.activePointer.x < this.game.width/4);
+
+    return isActive;
+};
+
+// This function should return true when the player activates the "go right" control
+// In this case, either holding the right arrow or tapping or clicking on the right
+// side of the screen.
+GameState.prototype.rightInputIsActive = function() {
+    var isActive = false;
+
+    isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+    isActive |= (this.game.input.activePointer.isDown &&
+        this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+
+    return isActive;
+};
+
+// This function should return true when the player activates the "jump" control
+// In this case, either holding the up arrow or tapping or clicking on the center
+// part of the screen.
+GameState.prototype.upInputIsActive = function() {
+    var isActive = false;
+
+    isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
+    isActive |= (this.game.input.activePointer.isDown &&
+        this.game.input.activePointer.x > this.game.width/4 &&
+        this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
+
+    return isActive;
+};
+
+var game = new Phaser.Game(848, 450, Phaser.AUTO, 'game');
+game.state.add('game', GameState, true);
+
