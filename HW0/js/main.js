@@ -8,8 +8,8 @@ var GameState = function(game) {
 
 // Load images and sounds
 GameState.prototype.preload = function() {
-    this.game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
-    this.game.load.image('ground', '/assets/ground.png');
+    game.load.spritesheet('ship', '/assets/ship.png', 32, 32);
+    game.load.image('ground', '/assets/ground.png');
 };
 
 // Setup the example
