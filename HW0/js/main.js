@@ -20,7 +20,7 @@ function make_main_game_state( game )
 			this.game.input.activePointer.x < this.game.width/4);
 
 		return isActive;
-	};
+	}
 
 	// This function should return true when the player activates the "go right" control
 	// In this case, either holding the right arrow or tapping or clicking on the right
@@ -33,7 +33,7 @@ function make_main_game_state( game )
 			this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
 		return isActive;
-	};
+	}
 
 	// This function should return true when the player activates the "jump" control
 	// In this case, either holding the up arrow or tapping or clicking on the center
@@ -47,7 +47,7 @@ function make_main_game_state( game )
 			this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
 
 		return isActive;
-	};
+	}
     
     function create() {
         this.game.stage.backgroundColor = 0x333333;
