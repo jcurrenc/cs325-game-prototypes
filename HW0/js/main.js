@@ -8,7 +8,46 @@ function make_main_game_state( game )
 		game.load.spritesheet('ship', '/assets/gfx/ship.png', 32, 32);
     }
     
-    var bouncy;
+
+	// This function should return true when the player activates the "go left" control
+	// In this case, either holding the right arrow or tapping or clicking on the left
+	// side of the screen.
+	leftInputIsActive = function() {
+		var isActive = false;
+
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+		isActive |= (this.game.input.activePointer.isDown &&
+			this.game.input.activePointer.x < this.game.width/4);
+
+		return isActive;
+	};
+
+	// This function should return true when the player activates the "go right" control
+	// In this case, either holding the right arrow or tapping or clicking on the right
+	// side of the screen.
+	rightInputIsActive = function() {
+		var isActive = false;
+
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+		isActive |= (this.game.input.activePointer.isDown &&
+			this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+
+		return isActive;
+	};
+
+	// This function should return true when the player activates the "jump" control
+	// In this case, either holding the up arrow or tapping or clicking on the center
+	// part of the screen.
+	upInputIsActive = function() {
+		var isActive = false;
+
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
+		isActive |= (this.game.input.activePointer.isDown &&
+			this.game.input.activePointer.x > this.game.width/4 &&
+			this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
+
+		return isActive;
+	};
     
     function create() {
         this.game.stage.backgroundColor = 0x333333;
@@ -101,45 +140,6 @@ function make_main_game_state( game )
     return { "preload": preload, "create": create, "update": update };
 }
 
-	// This function should return true when the player activates the "go left" control
-	// In this case, either holding the right arrow or tapping or clicking on the left
-	// side of the screen.
-	leftInputIsActive = function() {
-		var isActive = false;
-
-		isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
-		isActive |= (this.game.input.activePointer.isDown &&
-			this.game.input.activePointer.x < this.game.width/4);
-
-		return isActive;
-	};
-
-	// This function should return true when the player activates the "go right" control
-	// In this case, either holding the right arrow or tapping or clicking on the right
-	// side of the screen.
-	rightInputIsActive = function() {
-		var isActive = false;
-
-		isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
-		isActive |= (this.game.input.activePointer.isDown &&
-			this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
-
-		return isActive;
-	};
-
-	// This function should return true when the player activates the "jump" control
-	// In this case, either holding the up arrow or tapping or clicking on the center
-	// part of the screen.
-	upInputIsActive = function() {
-		var isActive = false;
-
-		isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
-		isActive |= (this.game.input.activePointer.isDown &&
-			this.game.input.activePointer.x > this.game.width/4 &&
-			this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
-
-		return isActive;
-	};
 
 window.onload = function() {
     // You might want to start with a template that uses GameStates:
