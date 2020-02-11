@@ -12,7 +12,7 @@ function make_main_game_state( game )
 	// This function should return true when the player activates the "go left" control
 	// In this case, either holding the right arrow or tapping or clicking on the left
 	// side of the screen.
-	leftInputIsActive = function() {
+	function leftInputIsActive() {
 		var isActive = false;
 
 		isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
@@ -25,7 +25,7 @@ function make_main_game_state( game )
 	// This function should return true when the player activates the "go right" control
 	// In this case, either holding the right arrow or tapping or clicking on the right
 	// side of the screen.
-	rightInputIsActive = function() {
+	function rightInputIsActive() {
 		var isActive = false;
 
 		isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
@@ -38,7 +38,7 @@ function make_main_game_state( game )
 	// This function should return true when the player activates the "jump" control
 	// In this case, either holding the up arrow or tapping or clicking on the center
 	// part of the screen.
-	upInputIsActive = function() {
+	function upInputIsActive(){
 		var isActive = false;
 
 		isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
