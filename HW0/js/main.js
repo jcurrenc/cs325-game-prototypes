@@ -1,39 +1,3 @@
-
-Gamepad Game Mechanic Explorer
-
-A collection of concrete examples for various game mechanics, algorithms, and effects. The examples are all implemented in JavaScript using the Phaser game framework, but the concepts and methods are general and can be adapted to any engine. Think of it as pseudocode. Each section contains several different examples that progress in sequence from a very basic implementation to a more advanced implementation. Every example is interactive and responds to keyboard or mouse input (or touch).
-Follow @yafd on Twitter for updates.
-
-    Basic movement
-    With drag
-    With gravity
-    Lunar lander
-
-Discover Phaser by Thomas Palef Learn to make your own HTML5 games with Phaser
-
-Questions, corrections, want to hire me? Contact me on Twitter or email.
-
-Copyright © 2018 John Watson
-
-The example source code is licensed under the terms of the MIT License. Art assets in the examples are licensed under the Creative Commons Attribution license (CC BY 3.0).
-
-Download all assets
-
-More demos are planned. Follow me on Twitter for updates.
-
-Changelog
-
-This site requires a modern web browser that supports HTML5. I recommend Chrome and Firefox.
-
-    Spaceship motionWith gravity
-
-Notes
-
-Use the left and right arrow keys or tap near the edges to rotate the ship. Press the up arrow key or tap the center to turn on the engine.
-
-The world now has gravity and a ground you can land on. The ship's ACCELERATION must be stronger than GRAVITY or it will never be able to move up.
-Source
-
 // This example uses the Phaser 2.2.2 framework
 
 // Copyright © 2014 John Watson
