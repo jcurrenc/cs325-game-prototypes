@@ -22,24 +22,24 @@ function make_main_game_state( game )
   		this.GRAVITY = 100; // pixels/second/second
 
   		// Add the ship to the stage
-  		ship = game.add.sprite(game.width/2, game.height/2, 'ship');
-  		ship.anchor.setTo(0.5, 0.5);
-  		ship.angle = -90; // Point the ship up
+  		this.ship = game.add.sprite(game.width/2, game.height/2, 'ship');
+  		this.ship.anchor.setTo(0.5, 0.5);
+  		this.ship.angle = -90; // Point the ship up
 
       // Enable physics on the ship
   		game.physics.enable(ship, Phaser.Physics.ARCADE);
 
       // Set maximum velocity
-      ship.body.maxVelocity.setTo(this.MAX_SPEED,this.MAX_SPEED);
+      this.ship.body.maxVelocity.setTo(this.MAX_SPEED,this.MAX_SPEED);
 
       // Add drag to the ship that slows it down when it is not accelerating
-      ship.body.drag.setTo(this.DRAG,this.DRAG);
+      this.ship.body.drag.setTo(this.DRAG,this.DRAG);
 
       // Turn on gravity
-      game.physics.arcade.gravity.y = GRAVITY;
+      game.physics.arcade.gravity.y = this.GRAVITY;
 
       // Make ship bounce a little
-      ship.body.bounce.setTo(0.25, 0.25);
+      this.ship.body.bounce.setTo(0.25, 0.25);
 
       // Create some ground for the ship to land on
       ground = game.add.group();
