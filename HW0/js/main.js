@@ -36,7 +36,7 @@ function make_main_game_state( game )
       this.ship.body.drag.setTo(this.DRAG,this.DRAG);
 
       // Turn on gravity
-      //game.physics.arcade.gravity.y = this.GRAVITY;
+      //game.physics.arcade.gravity = this.GRAVITY;
 
       // Make ship bounce a little
       this.ship.body.bounce.setTo(0.25, 0.25);
@@ -88,7 +88,11 @@ function make_main_game_state( game )
 
     function update() {
 
-      // Collide the ship with the ground
+      closestPlanet = Phaser.Physics.Arcade.closest(this.ship, this.planets);
+
+      Phaser.Physics.Arcade.accelerateToXY(this.ship,closestPlanet.x,closestPlanet.y,this.GRAVITY);
+
+      // Collide the ship with the planetd
       game.physics.arcade.collide(this.ship, this.planets);
 
       // Keep the ship on the screen
