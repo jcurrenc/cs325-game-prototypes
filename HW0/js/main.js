@@ -43,10 +43,10 @@ function make_main_game_state( game )
 
       // Create some ground for the ship to land on
       this.planets = game.add.group();
-      var planet1 = game.add.sprite(168, 182, 'planet');
-      var planet2 = game.add.sprite(213 , 412, 'planet');
-      var planet3 = game.add.sprite(610, 421, 'planet');
-      var planet4 = game.add.sprite(578, 155, 'planet');
+      var planet1 = game.add.sprite(168-100, 182-100, 'planet');
+      var planet2 = game.add.sprite(213-100 , 412-100, 'planet');
+      var planet3 = game.add.sprite(610-100, 421-100, 'planet');
+      var planet4 = game.add.sprite(578-100, 155-100, 'planet');
       game.physics.enable(planet1,Phaser.Physics.ARCADE);
       game.physics.enable(planet2,Phaser.Physics.ARCADE);
       game.physics.enable(planet3,Phaser.Physics.ARCADE);
