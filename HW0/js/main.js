@@ -42,7 +42,7 @@ function make_main_game_state( game )
       this.ship.body.bounce.setTo(0.25, 0.25);
 
       // Create some ground for the ship to land on
-      ground = game.add.group();
+      this.ground = game.add.group();
       for(var x = 0; x < this.game.width; x += 32) {
           // Add the ground blocks, enable physics on each, make them immovable
           var groundBlock = game.add.sprite(x, game.height - 32, 'ground');
