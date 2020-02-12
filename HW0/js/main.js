@@ -2,51 +2,9 @@
 
 function make_main_game_state( game )
 {
-  /*
-  // This function should return true when the player activates the "go left" control
-  // In this case, either holding the right arrow or tapping or clicking on the left
-  // side of the screen.
-  game.state.leftInputIsActive = function() {
-      var isActive = false;
-
-      isActive = game.input.keyboard.isDown(Phaser.Keyboard.LEFT);
-      isActive |= (game.input.activePointer.isDown &&
-          game.input.activePointer.x < game.width/4);
-
-      return isActive;
-  };
-
-  // This function should return true when the player activates the "go right" control
-  // In this case, either holding the right arrow or tapping or clicking on the right
-  // side of the screen.
-  game.state.rightInputIsActive = function() {
-      var isActive = false;
-
-      isActive = game.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
-      isActive |= (game.input.activePointer.isDown &&
-          game.input.activePointer.x > game.width/2 + game.width/4);
-
-      return isActive;
-  };
-
-  // This function should return true when the player activates the "jump" control
-  // In this case, either holding the up arrow or tapping or clicking on the center
-  // part of the screen.
-  game.state.upInputIsActive = function() {
-      var isActive = false;
-
-      isActive = game.input.keyboard.isDown(Phaser.Keyboard.UP);
-      isActive |= (game.input.activePointer.isDown &&
-          game.input.activePointer.x > game.width/4 &&
-          game.input.activePointer.x < game.width/2 + game.width/4);
-
-      return isActive;
-  };*/
-
-
     function preload() {
         // Load images
-        game.load.image( 'ground', 'assets/ground.png' );
+        game.load.image( 'planet', 'assets/planet.png' );
 		    game.load.spritesheet('ship','assets/ship.png',32,32);
     }
 
@@ -78,13 +36,31 @@ function make_main_game_state( game )
       this.ship.body.drag.setTo(this.DRAG,this.DRAG);
 
       // Turn on gravity
-      game.physics.arcade.gravity.y = this.GRAVITY;
+      //game.physics.arcade.gravity.y = this.GRAVITY;
 
       // Make ship bounce a little
       this.ship.body.bounce.setTo(0.25, 0.25);
 
       // Create some ground for the ship to land on
-      this.ground = game.add.group();
+      this.planets = game.add.group();
+      var planet1 = game.add.sprite(168, 182, 'planet');
+      var planet2 = game.add.sprite(213 , 412, 'planet');
+      var planet3 = game.add.sprite(610, 421, 'planet');
+      var planet4 = game.add.sprite(578, 155, 'planet');
+      game.physics.enable(planet1,Phaser.Physics.ARCADE);
+      game.physics.enable(planet2,Phaser.Physics.ARCADE);
+      game.physics.enable(planet3,Phaser.Physics.ARCADE);
+      game.physics.enable(planet4,Phaser.Physics.ARCADE);
+      planet1.body.immovable = true;
+      planet2.body.immovable = true;
+      planet3.body.immovable = true;
+      planet4.body.immovable = true;
+      this.planets.add(planet1);
+      this.planets.add(planet2);
+      this.planets.add(planet3);
+      this.planets.add(planet4);
+
+      /*
       for(var x = 0; x < this.game.width; x += 32) {
           // Add the ground blocks, enable physics on each, make them immovable
           var groundBlock = game.add.sprite(x, game.height - 32, 'ground');
@@ -93,6 +69,7 @@ function make_main_game_state( game )
           groundBlock.body.allowGravity = false;
           this.ground.add(groundBlock);
       }
+      */
 
       // Capture certain keys to prevent their default actions in the browser.
       // This is only necessary because this is an HTML5 game. Games on other
