@@ -2,6 +2,48 @@
 
 function make_main_game_state( game )
 {
+
+  // This function should return true when the player activates the "go left" control
+  // In this case, either holding the right arrow or tapping or clicking on the left
+  // side of the screen.
+  game.state.leftInputIsActive = function() {
+      var isActive = false;
+
+      isActive = input.keyboard.isDown(Phaser.Keyboard.LEFT);
+      isActive |= (game.input.activePointer.isDown &&
+          game.input.activePointer.x < game.width/4);
+
+      return isActive;
+  };
+
+  // This function should return true when the player activates the "go right" control
+  // In this case, either holding the right arrow or tapping or clicking on the right
+  // side of the screen.
+  game.state.rightInputIsActive = function() {
+      var isActive = false;
+
+      isActive = input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+      isActive |= (game.input.activePointer.isDown &&
+          game.input.activePointer.x > game.width/2 + game.width/4);
+
+      return isActive;
+  };
+
+  // This function should return true when the player activates the "jump" control
+  // In this case, either holding the up arrow or tapping or clicking on the center
+  // part of the screen.
+  game.state.upInputIsActive = function() {
+      var isActive = false;
+
+      isActive = input.keyboard.isDown(Phaser.Keyboard.UP);
+      isActive |= (game.input.activePointer.isDown &&
+          game.input.activePointer.x > game.width/4 &&
+          game.input.activePointer.x < game.width/2 + game.width/4);
+
+      return isActive;
+  };
+
+
     function preload() {
         // Load images
         game.load.image( 'ground', 'assets/ground.png' );
@@ -49,7 +91,7 @@ function make_main_game_state( game )
           game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
           groundBlock.body.immovable = true;
           groundBlock.body.allowGravity = false;
-          ground.add(groundBlock);
+          this.ground.add(groundBlock);
       }
 
       // Capture certain keys to prevent their default actions in the browser.
@@ -102,45 +144,6 @@ function make_main_game_state( game )
     }
 
 
-    // This function should return true when the player activates the "go left" control
-    // In this case, either holding the right arrow or tapping or clicking on the left
-    // side of the screen.
-    game.state.leftInputIsActive = function() {
-        var isActive = false;
-
-        isActive = input.keyboard.isDown(Phaser.Keyboard.LEFT);
-        isActive |= (game.input.activePointer.isDown &&
-            game.input.activePointer.x < game.width/4);
-
-        return isActive;
-    };
-
-    // This function should return true when the player activates the "go right" control
-    // In this case, either holding the right arrow or tapping or clicking on the right
-    // side of the screen.
-    game.state.rightInputIsActive = function() {
-        var isActive = false;
-
-        isActive = input.keyboard.isDown(Phaser.Keyboard.RIGHT);
-        isActive |= (game.input.activePointer.isDown &&
-            game.input.activePointer.x > game.width/2 + game.width/4);
-
-        return isActive;
-    };
-
-    // This function should return true when the player activates the "jump" control
-    // In this case, either holding the up arrow or tapping or clicking on the center
-    // part of the screen.
-    game.state.upInputIsActive = function() {
-        var isActive = false;
-
-        isActive = input.keyboard.isDown(Phaser.Keyboard.UP);
-        isActive |= (game.input.activePointer.isDown &&
-            game.input.activePointer.x > game.width/4 &&
-            game.input.activePointer.x < game.width/2 + game.width/4);
-
-        return isActive;
-    };
 
     return { "preload": preload, "create": create, "update": update };
 }
