@@ -9,7 +9,7 @@ function make_main_game_state( game )
   game.state.leftInputIsActive = function() {
       var isActive = false;
 
-      isActive = input.keyboard.isDown(Phaser.Keyboard.LEFT);
+      isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x < game.width/4);
 
@@ -22,7 +22,7 @@ function make_main_game_state( game )
   game.state.rightInputIsActive = function() {
       var isActive = false;
 
-      isActive = input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+      isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x > game.width/2 + game.width/4);
 
@@ -35,7 +35,7 @@ function make_main_game_state( game )
   game.state.upInputIsActive = function() {
       var isActive = false;
 
-      isActive = input.keyboard.isDown(Phaser.Keyboard.UP);
+      isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x > game.width/4 &&
           game.input.activePointer.x < game.width/2 + game.width/4);
