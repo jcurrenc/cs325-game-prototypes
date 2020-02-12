@@ -90,7 +90,7 @@ function make_main_game_state( game )
 
       this.closestPlanet = this.planets.getClosestTo(this.ship);
 
-      Phaser.Physics.Arcade.accelerateToXY(this.ship,this.closestPlanet.x,this.closestPlanet.y,this.GRAVITY);
+      game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.x,this.closestPlanet.y,this.GRAVITY);
 
       // Collide the ship with the planetd
       game.physics.arcade.collide(this.ship, this.planets);
