@@ -90,7 +90,7 @@ function make_main_game_state( game )
 
     function update() {
 
-      for(p in this.planets.getAll()){
+      for(p of this.planets.getAll()){
         var angle = game.physics.arcade.angleToXY(this.ship,p.body.x,p.body.y);
         var dist = game.physics.arcade.distanceBetween(this.ship,p);
         this.shipGravVectX += this.GRAVITY/dist * Math.cos(angle);
