@@ -85,7 +85,7 @@ function make_main_game_state( game )
     function update() {
 
       // Collide the ship with the ground
-      game.physics.arcade.collide(this.ship, this.ground);
+      game.physics.arcade.collide(this.ship, this.planets);
 
       // Keep the ship on the screen
       if (this.ship.x > game.width) this.ship.x = 0;
