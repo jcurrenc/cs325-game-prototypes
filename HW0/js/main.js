@@ -90,9 +90,8 @@ function make_main_game_state( game )
 
       this.closestPlanet = this.planets.getClosestTo(this.ship);
 
-      //game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y,this.GRAVITY);
-      game.physics.arcade.gravity.x = this.closestPlanet.position.x;
-      game.physics.arcade.gravity.y = this.closestPlanet.position.y;
+      game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y,this.GRAVITY);
+
       // Collide the ship with the planetd
       game.physics.arcade.collide(this.ship, this.planets);
 
@@ -124,7 +123,7 @@ function make_main_game_state( game )
           this.ship.frame = 1;
       } else {
           // Otherwise, stop thrusting
-          this.ship.body.acceleration.setTo(0, 0);
+          //this.ship.body.acceleration.setTo(0, 0);
 
           // Show the frame from the spritesheet with the engine off
           this.ship.frame = 0;
