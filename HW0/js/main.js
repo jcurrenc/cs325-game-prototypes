@@ -88,7 +88,7 @@ function make_main_game_state( game )
 
     function update() {
 
-      closestPlanet = Phaser.Physics.Arcade.closest(this.ship, this.planets);
+      closestPlanet = this.planets.getClosestTo(this.ship);
 
       Phaser.Physics.Arcade.accelerateToXY(this.ship,closestPlanet.x,closestPlanet.y,this.GRAVITY);
 
