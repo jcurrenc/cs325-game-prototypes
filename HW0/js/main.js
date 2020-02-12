@@ -2,14 +2,14 @@
 
 function make_main_game_state( game )
 {
-
+  /*
   // This function should return true when the player activates the "go left" control
   // In this case, either holding the right arrow or tapping or clicking on the left
   // side of the screen.
   game.state.leftInputIsActive = function() {
       var isActive = false;
 
-      isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+      isActive = game.input.keyboard.isDown(Phaser.Keyboard.LEFT);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x < game.width/4);
 
@@ -22,7 +22,7 @@ function make_main_game_state( game )
   game.state.rightInputIsActive = function() {
       var isActive = false;
 
-      isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+      isActive = game.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x > game.width/2 + game.width/4);
 
@@ -35,13 +35,13 @@ function make_main_game_state( game )
   game.state.upInputIsActive = function() {
       var isActive = false;
 
-      isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
+      isActive = game.input.keyboard.isDown(Phaser.Keyboard.UP);
       isActive |= (game.input.activePointer.isDown &&
           game.input.activePointer.x > game.width/4 &&
           game.input.activePointer.x < game.width/2 + game.width/4);
 
       return isActive;
-  };
+  };*/
 
 
     function preload() {
@@ -115,10 +115,10 @@ function make_main_game_state( game )
       if (this.ship.x < 0) this.ship.x = game.width;
 
 
-      if (game.state.leftInputIsActive()) {
+      if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
           // If the LEFT key is down, rotate left
           this.ship.body.angularVelocity = -this.ROTATION_SPEED;
-      } else if (game.state.rightInputIsActive()) {
+      } else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
           // If the RIGHT key is down, rotate right
           this.ship.body.angularVelocity = this.ROTATION_SPEED;
       } else {
@@ -126,7 +126,7 @@ function make_main_game_state( game )
           this.ship.body.angularVelocity = 0;
       }
 
-      if (game.state.upInputIsActive()) {
+      if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
           this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
