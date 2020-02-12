@@ -47,7 +47,7 @@ function make_main_game_state( game )
     function preload() {
         // Load images
         game.load.image( 'ground', 'assets/ground.png' );
-		    game.load.spritesheet('ship','assets/ship.png');
+		    game.load.spritesheet('ship','assets/ship.png',32,32);
     }
 
 
