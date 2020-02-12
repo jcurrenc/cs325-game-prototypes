@@ -15,11 +15,11 @@ function make_main_game_state( game )
   		game.stage.backgroundColor = 0x333333;
 
   		// Define motion constants
-  		ROTATION_SPEED = 180; // degrees/second
-  		ACCELERATION = 200; // pixels/second/second
-  		MAX_SPEED = 250; // pixels/second
-  		DRAG = 25; // pixels/second
-  		GRAVITY = 100; // pixels/second/second
+  		this.ROTATION_SPEED = 180; // degrees/second
+  		this.ACCELERATION = 200; // pixels/second/second
+  		this.MAX_SPEED = 250; // pixels/second
+  		this.DRAG = 25; // pixels/second
+  		this.GRAVITY = 100; // pixels/second/second
 
   		// Add the ship to the stage
   		ship = game.add.sprite(game.width/2, game.height/2, 'ship');
@@ -30,10 +30,10 @@ function make_main_game_state( game )
   		game.physics.enable(ship, Phaser.Physics.ARCADE);
 
       // Set maximum velocity
-      ship.body.maxVelocity.setTo(MAX_SPEED,MAX_SPEED);
+      ship.body.maxVelocity.setTo(this.MAX_SPEED,this.MAX_SPEED);
 
       // Add drag to the ship that slows it down when it is not accelerating
-      ship.body.drag.setTo(DRAG,DRAG);
+      ship.body.drag.setTo(this.DRAG,this.DRAG);
 
       // Turn on gravity
       game.physics.arcade.gravity.y = GRAVITY;
@@ -64,39 +64,40 @@ function make_main_game_state( game )
     }
 
     function update() {
+
       // Collide the ship with the ground
-      game.physics.arcade.collide(ship, ground);
+      game.physics.arcade.collide(this.ship, this.ground);
 
       // Keep the ship on the screen
-      if (ship.x > game.width) ship.x = 0;
-      if (ship.x < 0) ship.x = game.width;
+      if (this.ship.x > game.width) this.ship.x = 0;
+      if (this.ship.x < 0) this.ship.x = game.width;
 
 
       if (leftInputIsActive()) {
           // If the LEFT key is down, rotate left
-          ship.body.angularVelocity = -ROTATION_SPEED;
+          this.ship.body.angularVelocity = -this.ROTATION_SPEED;
       } else if (rightInputIsActive()) {
           // If the RIGHT key is down, rotate right
-          ship.body.angularVelocity = ROTATION_SPEED;
+          this.ship.body.angularVelocity = this.ROTATION_SPEED;
       } else {
           // Stop rotating
-          ship.body.angularVelocity = 0;
+          this.ship.body.angularVelocity = 0;
       }
 
       if (upInputIsActive()) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
-          ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
-          ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
 
           // Show the frame from the spritesheet with the engine on
-          ship.frame = 1;
+          this.ship.frame = 1;
       } else {
           // Otherwise, stop thrusting
-          ship.body.acceleration.setTo(0, 0);
+          this.ship.body.acceleration.setTo(0, 0);
 
           // Show the frame from the spritesheet with the engine off
-          ship.frame = 0;
+          this.ship.frame = 0;
       }
     }
 
@@ -132,7 +133,7 @@ function make_main_game_state( game )
     // part of the screen.
     game.state.upInputIsActive = function() {
         var isActive = false;
-    
+
         isActive = input.keyboard.isDown(Phaser.Keyboard.UP);
         isActive |= (game.input.activePointer.isDown &&
             game.input.activePointer.x > game.width/4 &&
