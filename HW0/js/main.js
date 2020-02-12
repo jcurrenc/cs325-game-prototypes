@@ -27,7 +27,7 @@ function make_main_game_state( game )
   		this.ship.angle = -90; // Point the ship up
 
       // Enable physics on the ship
-  		game.physics.enable(ship, Phaser.Physics.ARCADE);
+  		game.physics.enable(this.ship, Phaser.Physics.ARCADE);
 
       // Set maximum velocity
       this.ship.body.maxVelocity.setTo(this.MAX_SPEED,this.MAX_SPEED);
@@ -73,10 +73,10 @@ function make_main_game_state( game )
       if (this.ship.x < 0) this.ship.x = game.width;
 
 
-      if (leftInputIsActive()) {
+      if (this.leftInputIsActive()) {
           // If the LEFT key is down, rotate left
           this.ship.body.angularVelocity = -this.ROTATION_SPEED;
-      } else if (rightInputIsActive()) {
+      } else if (this.rightInputIsActive()) {
           // If the RIGHT key is down, rotate right
           this.ship.body.angularVelocity = this.ROTATION_SPEED;
       } else {
@@ -84,7 +84,7 @@ function make_main_game_state( game )
           this.ship.body.angularVelocity = 0;
       }
 
-      if (upInputIsActive()) {
+      if (this.upInputIsActive()) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
           this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
