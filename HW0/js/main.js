@@ -91,7 +91,7 @@ function make_main_game_state( game )
       this.closestPlanet = this.planets.getClosestTo(this.ship);
       console.log(this.closestPlanet);
 
-      game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.world.x,this.closestPlanet.world.y,this.GRAVITY);
+      game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y,this.GRAVITY);
 
       // Collide the ship with the planetd
       game.physics.arcade.collide(this.ship, this.planets);
