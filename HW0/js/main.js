@@ -90,7 +90,7 @@ function make_main_game_state( game )
 
       this.closestPlanet = this.planets.getClosestTo(this.ship);
 
-      game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y,this.GRAVITY);
+      this.angtoClosest = game.physics.arcade.angleToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y);
 
       // Collide the ship with the planetd
       game.physics.arcade.collide(this.ship, this.planets);
@@ -116,14 +116,16 @@ function make_main_game_state( game )
       if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
-          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
-          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION;
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.angtoClosest) * this.gravity ;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.angtoClosest) * this.gravity;
 
           // Show the frame from the spritesheet with the engine on
           this.ship.frame = 1;
       } else {
           // Otherwise, stop thrusting
           //this.ship.body.acceleration.setTo(0, 0);
+          this.ship.body.acceleration.x = Math.cos(this.angtoClosest) * this.gravity ;
+          this.ship.body.acceleration.y = Math.sin(this.angtoClosest) * this.gravity;
 
           // Show the frame from the spritesheet with the engine off
           this.ship.frame = 0;
