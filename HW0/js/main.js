@@ -88,7 +88,7 @@ function make_main_game_state( game )
 
     function update() {
 
-      closestPlanet = this.planets.getClosestTo(this.ship);
+      this.closestPlanet = this.planets.getClosestTo(this.ship);
 
       Phaser.Physics.Arcade.accelerateToXY(this.ship,closestPlanet.x,closestPlanet.y,this.GRAVITY);
 
@@ -98,6 +98,8 @@ function make_main_game_state( game )
       // Keep the ship on the screen
       if (this.ship.x > game.width) this.ship.x = 0;
       if (this.ship.x < 0) this.ship.x = game.width;
+      if (this.ship.y > game.height) this.ship.y = 0;
+      if (this.ship.y < 0) this.ship.y = game.height;
 
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
