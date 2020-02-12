@@ -55,6 +55,10 @@ function make_main_game_state( game )
       planet2.body.immovable = true;
       planet3.body.immovable = true;
       planet4.body.immovable = true;
+      planet1.body.setCircle(90);
+      planet2.body.setCircle(90);
+      planet3.body.setCircle(90);
+      planet4.body.setCircle(90);
       this.planets.add(planet1);
       this.planets.add(planet2);
       this.planets.add(planet3);
