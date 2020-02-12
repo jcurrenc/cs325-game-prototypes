@@ -89,6 +89,7 @@ function make_main_game_state( game )
     function update() {
 
       this.closestPlanet = this.planets.getClosestTo(this.ship);
+      console.log(this.closestPlanet);
 
       game.physics.arcade.accelerateToXY(this.ship,this.closestPlanet.x,this.closestPlanet.y,this.GRAVITY);
 
