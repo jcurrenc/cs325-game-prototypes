@@ -115,10 +115,10 @@ function make_main_game_state( game )
       if (this.ship.x < 0) this.ship.x = game.width;
 
 
-      if (this.leftInputIsActive()) {
+      if (game.state.leftInputIsActive()) {
           // If the LEFT key is down, rotate left
           this.ship.body.angularVelocity = -this.ROTATION_SPEED;
-      } else if (this.rightInputIsActive()) {
+      } else if (game.state.rightInputIsActive()) {
           // If the RIGHT key is down, rotate right
           this.ship.body.angularVelocity = this.ROTATION_SPEED;
       } else {
@@ -126,7 +126,7 @@ function make_main_game_state( game )
           this.ship.body.angularVelocity = 0;
       }
 
-      if (this.upInputIsActive()) {
+      if (game.state.upInputIsActive()) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
           this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION;
