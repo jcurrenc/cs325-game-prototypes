@@ -129,8 +129,8 @@ function make_main_game_state( game )
           //this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + this.shipGravVectX;
           //this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + this.shipGravVectY;
 
-          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.ship.rotation) * this.GRAVITY;
-          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.ship.rotation) * this.GRAVITY ;
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.angtoClosest) * this.GRAVITY;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.angtoClosest) * this.GRAVITY ;
 
           // Show the frame from the spritesheet with the engine on
           this.ship.frame = 1;
@@ -141,8 +141,8 @@ function make_main_game_state( game )
           //this.ship.body.acceleration.x = this.shipGravVectX;
           //this.ship.body.acceleration.y = this.shipGravVectY;
 
-          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.ship.rotation) * this.GRAVITY;
-          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.ship.rotation) * this.GRAVITY ;
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.angtoClosest) * this.GRAVITY;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.angtoClosest) * this.GRAVITY ;
 
           // Show the frame from the spritesheet with the engine off
           this.ship.frame = 0;
