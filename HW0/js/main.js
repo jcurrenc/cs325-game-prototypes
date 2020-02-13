@@ -134,6 +134,9 @@ function make_main_game_state( game )
         if (s.x < 0) s.x = game.width;
         if (s.y > game.height) s.y = 0;
         if (s.y < 0) s.y = game.height;
+
+        s.body.acceleration.x =  Math.cos(Math.random()*Math.PI*2) * 100;
+        s.body.acceleration.y =  Math.sin(Math.random()*Math.PI*2) * 100;
       }
 
 
