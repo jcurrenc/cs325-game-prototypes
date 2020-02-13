@@ -23,7 +23,7 @@ function make_main_game_state( game )
 
   		// Define motion constants
   		this.ROTATION_SPEED = 180; // degrees/second
-  		this.ACCELERATION = 200; // pixels/second/second
+  		this.ACCELERATION = 500; // pixels/second/second
   		this.MAX_SPEED = 250; // pixels/second
   		this.DRAG = 25; // pixels/second
   		this.GRAVITY = 25; // pixels/second/second
@@ -78,10 +78,6 @@ function make_main_game_state( game )
       for(i = 0; i < 5; i++){
         var star = game.add.sprite(Math.floor(Math.random() * 801),Math.floor(Math.random() * 601),'star');
         game.physics.enable(star, Phaser.Physics.ARCADE);
-        star.body.checkCollision.up = false;
-        star.body.checkCollision.down = false;
-        star.body.checkCollision.left = false;
-        star.body.checkCollision.right = false;
         star.body.acceleration.x =  Math.cos(Math.random()*Math.PI*2) * 100;
         star.body.acceleration.y =  Math.sin(Math.random()*Math.PI*2) * 100;
         this.stars.add(star);
