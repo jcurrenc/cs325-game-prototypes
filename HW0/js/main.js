@@ -19,7 +19,7 @@ function make_main_game_state( game )
   		this.ACCELERATION = 200; // pixels/second/second
   		this.MAX_SPEED = 250; // pixels/second
   		this.DRAG = 25; // pixels/second
-  		this.GRAVITY = 100; // pixels/second/second
+  		this.GRAVITY = 10000; // pixels/second/second
       this.shipGravVectX = 0;
       this.shipGravVectY = 0;
 
