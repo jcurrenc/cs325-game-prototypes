@@ -83,7 +83,7 @@ function make_main_game_state( game )
         this.stars.add(star);
       }
 
-      game.physics.arcade.overlap(this.ship, this.stars, collectStar, null, this);
+
       /*
       for(var x = 0; x < this.game.width; x += 32) {
           // Add the ground blocks, enable physics on each, make them immovable
@@ -122,7 +122,7 @@ function make_main_game_state( game )
 
       // Collide the ship with the planets
       game.physics.arcade.collide(this.ship, this.planets);
-
+      game.physics.arcade.overlap(this.ship, this.stars, collectStar, null, this);
 
       // Keep the ship on the screen
       if (this.ship.x > game.width) this.ship.x = 0;
