@@ -5,6 +5,7 @@ function make_main_game_state( game )
     function preload() {
         // Load images
         game.load.image( 'planet', 'assets/planet.png' );
+        game.load.image( 'star', 'assets/star.png' );
 		    game.load.spritesheet('ship','assets/ship.png',32,32);
         game.load.audio('thrust', 'assest/22453__nathanshadow__space-ambient.aiff');
         game.load.audio('music', 'assest/bensound-endlessmotion.mp3');
@@ -71,6 +72,15 @@ function make_main_game_state( game )
       this.planets.add(planet2);
       this.planets.add(planet3);
       this.planets.add(planet4);
+
+      this.stars = game.add.group();
+      for(i = 0; i < 5; i++){
+        var star = game.add.sprite(Math.floor(Math.random() * 801),Math.floor(Math.random() * 601),'star');
+        game.physics.enable(star, Phaser.Physics.ARCADE);
+        star.body.acceleration.x =  Math.cos(Math.random()*Math.PI*2;) * 100;
+        star.body.acceleration.y =  Math.sin(Math.random()*Math.PI*2;) * 100;
+        this.planets.add(star);
+      }
 
       /*
       for(var x = 0; x < this.game.width; x += 32) {
