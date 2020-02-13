@@ -11,11 +11,11 @@ function make_main_game_state( game )
 
 
 
-    function create() {
+    function create() { // Set up here is based heavily on gamemechanicexplorer spaceship examples
   		// Set stage background color
   		game.stage.backgroundColor = 0x333333;
 
-  		// Define motion constants **Mostly Borrowed from
+  		// Define motion constants **Mostly Borrowed from gamemechanicexplorer
   		this.ROTATION_SPEED = 180; // degrees/second
   		this.ACCELERATION = 500; // pixels/second/second
   		this.MAX_SPEED = 250; // pixels/second
@@ -44,7 +44,7 @@ function make_main_game_state( game )
       // Make ship bounce a little
       this.ship.body.bounce.setTo(0.25, 0.25);
 
-      // Create some ground for the ship to land on
+      // Create planets
       this.planets = game.add.group();
       var planet1 = game.add.sprite(168-100, 182-100, 'planet');
       var planet2 = game.add.sprite(213-100 , 412-100, 'planet');
@@ -67,6 +67,7 @@ function make_main_game_state( game )
       this.planets.add(planet3);
       this.planets.add(planet4);
 
+      //Creating the stars is a more intelligent way
       this.stars = game.add.group();
       var i;
       for(i = 0; i < 5; i++){
@@ -110,12 +111,15 @@ function make_main_game_state( game )
         this.shipGravVectY += this.GRAVITY/dist * Math.sin(angle);
       }
       */
+
       this.closestPlanet = this.planets.getClosestTo(this.ship);
 
       this.angtoClosest = game.physics.arcade.angleToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y);
 
       // Collide the ship with the planets
       game.physics.arcade.collide(this.ship, this.planets);
+
+      //Make the ship collect stars
       game.physics.arcade.overlap(this.ship, this.stars, collectStar, null, this);
 
       // Keep the ship on the screen
@@ -124,6 +128,7 @@ function make_main_game_state( game )
       if (this.ship.y > game.height) this.ship.y = 0;
       if (this.ship.y < 0) this.ship.y = game.height;
 
+      //Keeps the stars on the screen
       var s;
       for(s of this.stars.getAll()){
 
@@ -200,6 +205,7 @@ window.onload = function() {
     game.state.start( "main" );
 };
 
+//Borrowed from phaser tutorials
 function collectStar (player, star) {
 
     // Removes the star from the screen
