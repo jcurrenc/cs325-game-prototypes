@@ -13,9 +13,10 @@ function make_main_game_state( game )
 
 
     function create() {
-      music = game.add.audio('music');
-      thrust = game.add.audio('thrust');
+      this.music = game.add.audio('music');
+      this.thrust = game.add.audio('thrust');
 
+      this.music.play();
   		// Set stage background color
   		game.stage.backgroundColor = 0x333333;
 
