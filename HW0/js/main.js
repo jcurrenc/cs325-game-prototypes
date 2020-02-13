@@ -6,11 +6,16 @@ function make_main_game_state( game )
         // Load images
         game.load.image( 'planet', 'assets/planet.png' );
 		    game.load.spritesheet('ship','assets/ship.png',32,32);
+        game.load.audio('thrust', 'assest/22453__nathanshadow__space-ambient.aiff');
+        game.load.audio('music', 'assest/bensound-endlessmotion.mp3');
     }
 
 
 
     function create() {
+      music = game.add.audio('music');
+      thrust = game.add.audio('thrust');
+
   		// Set stage background color
   		game.stage.backgroundColor = 0x333333;
 
