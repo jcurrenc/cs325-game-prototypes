@@ -184,10 +184,10 @@ function make_main_game_state( game )
       }
     }
 
-    function  collectStar(this.ship, star)
+    collectStar = function(this.ship, star)
     {
         star.disableBody(true, true);
-    }
+    };
 
 
     return { "preload": preload, "create": create, "update": update };
