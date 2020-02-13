@@ -87,7 +87,7 @@ function make_main_game_state( game )
         this.stars.add(star);
       }
 
-      this.physics.add.overlap(this.ship, this.stars, this.collectStar, null, this);
+      this.physics.add.overlap(this.ship, this.stars, star.disableBody(true, true), null, this);
       /*
       for(var x = 0; x < this.game.width; x += 32) {
           // Add the ground blocks, enable physics on each, make them immovable
@@ -183,11 +183,6 @@ function make_main_game_state( game )
           this.ship.frame = 0;
       }
     }
-
-    collectStar = function(this.ship, star)
-    {
-        star.disableBody(true, true);
-    };
 
 
     return { "preload": preload, "create": create, "update": update };
