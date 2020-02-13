@@ -7,21 +7,15 @@ function make_main_game_state( game )
         game.load.image( 'planet', 'assets/planet.png' );
         game.load.image( 'star', 'assets/star.png' );
 		    game.load.spritesheet('ship','assets/ship.png',32,32);
-        game.load.audio('thrust', 'assest/22453__nathanshadow__space-ambient.mp3');
-        game.load.audio('music', 'assest/bensound-endlessmotion.mp3');
     }
 
 
 
     function create() {
-      this.music = game.add.audio('music');
-      this.thrust = game.add.audio('thrust');
-
-      this.music.play();
   		// Set stage background color
   		game.stage.backgroundColor = 0x333333;
 
-  		// Define motion constants
+  		// Define motion constants **Mostly Borrowed from
   		this.ROTATION_SPEED = 180; // degrees/second
   		this.ACCELERATION = 500; // pixels/second/second
   		this.MAX_SPEED = 250; // pixels/second
