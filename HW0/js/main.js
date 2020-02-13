@@ -19,7 +19,7 @@ function make_main_game_state( game )
   		this.ACCELERATION = 200; // pixels/second/second
   		this.MAX_SPEED = 250; // pixels/second
   		this.DRAG = 25; // pixels/second
-  		this.GRAVITY = 10000; // pixels/second/second
+  		this.GRAVITY = 100; // pixels/second/second
       this.shipGravVectX = 0;
       this.shipGravVectY = 0;
 
@@ -89,6 +89,7 @@ function make_main_game_state( game )
     }
 
     function update() {
+      /*
       var p;
       for(p of this.planets.getAll()){
         var angle = game.physics.arcade.angleToXY(this.ship,p.body.x,p.body.y);
@@ -96,6 +97,7 @@ function make_main_game_state( game )
         this.shipGravVectX += this.GRAVITY/dist * Math.cos(angle);
         this.shipGravVectY += this.GRAVITY/dist * Math.sin(angle);
       }
+      */
       this.closestPlanet = this.planets.getClosestTo(this.ship);
 
       this.angtoClosest = game.physics.arcade.angleToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y);
@@ -124,16 +126,23 @@ function make_main_game_state( game )
       if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
           // If the UP key is down, thrust
           // Calculate acceleration vector based on this.angle and this.ACCELERATION
-          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + this.shipGravVectX;
-          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + this.shipGravVectY;
+          //this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + this.shipGravVectX;
+          //this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + this.shipGravVectY;
+
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.ship.rotation) * this.GRAVITY;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.ship.rotation) * this.GRAVITY ;
 
           // Show the frame from the spritesheet with the engine on
           this.ship.frame = 1;
       } else {
           // Otherwise, stop thrusting
           //this.ship.body.acceleration.setTo(0, 0);
-          this.ship.body.acceleration.x = this.shipGravVectX;
-          this.ship.body.acceleration.y = this.shipGravVectY;
+
+          //this.ship.body.acceleration.x = this.shipGravVectX;
+          //this.ship.body.acceleration.y = this.shipGravVectY;
+
+          this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * this.ACCELERATION + Math.cos(this.ship.rotation) * this.GRAVITY;
+          this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * this.ACCELERATION + Math.sin(this.ship.rotation) * this.GRAVITY ;
 
           // Show the frame from the spritesheet with the engine off
           this.ship.frame = 0;
