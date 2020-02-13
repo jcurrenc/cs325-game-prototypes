@@ -7,7 +7,7 @@ function make_main_game_state( game )
         game.load.image( 'planet', 'assets/planet.png' );
         game.load.image( 'star', 'assets/star.png' );
 		    game.load.spritesheet('ship','assets/ship.png',32,32);
-        game.load.audio('thrust', 'assest/22453__nathanshadow__space-ambient.aiff');
+        game.load.audio('thrust', 'assest/22453__nathanshadow__space-ambient.mp3');
         game.load.audio('music', 'assest/bensound-endlessmotion.mp3');
     }
 
