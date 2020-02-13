@@ -74,6 +74,7 @@ function make_main_game_state( game )
       this.planets.add(planet4);
 
       this.stars = game.add.group();
+      var i;
       for(i = 0; i < 5; i++){
         var star = game.add.sprite(Math.floor(Math.random() * 801),Math.floor(Math.random() * 601),'star');
         game.physics.enable(star, Phaser.Physics.ARCADE);
@@ -126,6 +127,14 @@ function make_main_game_state( game )
       if (this.ship.x < 0) this.ship.x = game.width;
       if (this.ship.y > game.height) this.ship.y = 0;
       if (this.ship.y < 0) this.ship.y = game.height;
+
+      var s;
+      for(s of this.stars.getAll()){
+        if (s.x > game.width) s.x = 0;
+        if (s.x < 0) s.x = game.width;
+        if (s.y > game.height) s.y = 0;
+        if (s.y < 0) s.y = game.height;
+      }
 
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
