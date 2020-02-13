@@ -184,7 +184,7 @@ function make_main_game_state( game )
       }
     }
 
-    collectStar: function (this.ship, star)
+    function  collectStar(this.ship, star)
     {
         star.disableBody(true, true);
     }
