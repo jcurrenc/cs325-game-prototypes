@@ -84,7 +84,7 @@ function make_main_game_state( game )
         star.body.checkCollision.right = false;
         star.body.acceleration.x =  Math.cos(Math.random()*Math.PI*2) * 100;
         star.body.acceleration.y =  Math.sin(Math.random()*Math.PI*2) * 100;
-        this.planets.add(star);
+        this.stars.add(star);
       }
 
       /*
@@ -123,7 +123,7 @@ function make_main_game_state( game )
 
       this.angtoClosest = game.physics.arcade.angleToXY(this.ship,this.closestPlanet.position.x,this.closestPlanet.position.y);
 
-      // Collide the ship with the planetd
+      // Collide the ship with the planets
       game.physics.arcade.collide(this.ship, this.planets);
 
       // Keep the ship on the screen
