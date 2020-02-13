@@ -87,7 +87,7 @@ function make_main_game_state( game )
         this.stars.add(star);
       }
 
-      this.physics.add.overlap(this.ship, this.stars, star.disableBody(true, true), null, this);
+      game.physics.arcade.overlap(player, stars, collectStar, null, this);
       /*
       for(var x = 0; x < this.game.width; x += 32) {
           // Add the ground blocks, enable physics on each, make them immovable
@@ -209,3 +209,10 @@ window.onload = function() {
 
     game.state.start( "main" );
 };
+
+function collectStar (player, star) {
+
+    // Removes the star from the screen
+    star.kill();
+
+}
