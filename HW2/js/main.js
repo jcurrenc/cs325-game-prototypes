@@ -3,29 +3,37 @@
 function make_main_game_state( game )
 {
     function preload() {
-        // Load an image and call it 'logo'.
-        game.load.image( 'logo', 'assets/phaser.png' );
+        game.load.image(     'cat', 'assets/png/cat/Idle (1).png' );
+        game.load.image(     'catJump', 'assets/png/cat/Jump (3).png' );
+        game.load.image(     'catSlide', 'assets/png/cat/Slide (1).png' );
+        game.load.image(     'catDead', 'assets/png/cat/Dead (2).png' );
+        game.load.image(     'catFall', 'assets/png/dog/Dead (2).png' );
     }
     
-    var bouncy;
+    var player;
     
     function create() {
+        this.GRAVITY = 2600;
         // Create a sprite at the center of the screen using the 'logo' image.
-        bouncy = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
+        player = game.add.sprite( game.world.centerX, game.world.centerY, 'cat' );
         // Anchor the sprite at its center, as opposed to its top-left corner.
         // so it will be truly centered.
-        bouncy.anchor.setTo( 0.5, 0.5 );
+
         
         // Turn on the arcade physics engine for this sprite.
-        game.physics.enable( bouncy, Phaser.Physics.ARCADE );
+        game.physics.enable( player, Phaser.Physics.ARCADE );
+
+        game.physics.arcade.gravity.y = this.GRAVITY;
         // Make it bounce off of the world bounds.
-        bouncy.body.collideWorldBounds = true;
-        
-        // Add some text using a CSS style.
-        // Center it in X, and position its top 15 pixels from the top of the world.
-        var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        var text = game.add.text( game.world.centerX, 15, "Build something amazing.", style );
-        text.anchor.setTo( 0.5, 0.0 );
+        player.body.collideWorldBounds = true;
+
+
+        game.input.keyboard.addKeyCapture([
+            Phaser.Keyboard.LEFT,
+            Phaser.Keyboard.RIGHT,
+            Phaser.Keyboard.UP,
+            Phaser.Keyboard.DOWN
+        ]);
     }
     
     function update() {
@@ -34,7 +42,16 @@ function make_main_game_state( game )
         // in X or Y.
         // This function returns the rotation angle that makes it visually match its
         // new trajectory.
-        bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, game.input.activePointer, 500, 500, 500 );
+
+        if(this.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+            player.body.acceleration.x = -1500;
+        }
+        else if(this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+            player.body.acceleration.x = 1500;
+        }
+        else{
+            player.body.acceleration.x = 0;
+        }
     }
     
     return { "preload": preload, "create": create, "update": update };
@@ -54,7 +71,7 @@ window.onload = function() {
     // loading functions to reflect where you are putting the assets.
     // All loading functions will typically all be found inside "preload()".
     
-    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game' );
+    var game = new Phaser.Game( 400, 600, Phaser.AUTO, 'game' );
     
     game.state.add( "main", make_main_game_state( game ) );
     
