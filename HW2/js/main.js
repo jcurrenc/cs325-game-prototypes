@@ -16,7 +16,7 @@ function make_main_game_state( game )
         this.GRAVITY = 2600;
         // Create a sprite at the center of the screen using the 'logo' image.
         player = game.add.sprite( game.world.centerX, game.world.centerY, 'cat' );
-        player.scale.set(0.1);
+        player.scale.set(0.2);
         // Anchor the sprite at its center, as opposed to its top-left corner.
         // so it will be truly centered.
 
