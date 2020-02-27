@@ -39,12 +39,14 @@ function make_main_game_state( game )
 
 
     function create() {
-        meow = game.add.audio('meow');
+        meow = game.add.audio('catMeow');
         jump = game.add.audio('jump');
         music = game.add.audio('titleMusic');
         music.play();
         background = game.add.tileSprite(0, 0, 400, 800, 'background');
         scoreText = game.add.text( 64, 16, "Score: " + score, style );
+        var text = game.add.text(64, 50, "Hold left to start!", style);
+
         hpText = game.add.text(64,32, "HP: 3",style);
         //this.text = game.add.text( game.world.centerX/2, game.world.centerY, "Press UP to jump onto one\n of the walls!", style );
         this.jumpH = -700;
@@ -132,7 +134,6 @@ function make_main_game_state( game )
         game.physics.arcade.collide(player,this.rightWall);
         game.physics.arcade.collide(player, this.spikes, spikeCallback, null, this);
         game.physics.arcade.collide(player, this.cats, catCallback, null, this);
-
 
         if(this.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
             if(!player.body.touching.down && (player.body.touching.right || player.body.touching.left)){
