@@ -14,6 +14,9 @@ function make_main_game_state( game )
         game.load.image('wood', 'assets/wood.png');
         game.load.image('carpenter', 'assets/carpenter.png');
         game.load.image('background', 'assets/background.png');
+        game.load.audio('damage', "assets/Minecraft-death-sound.mp3");
+        game.load.audio('place', "assets/sfx_throw.wav");
+        game.load.audio('music', "assets/08 - Pelican Town.mp3");
         game.load.spritesheet('explosion', 'assets/gfx/explosion.png', 128, 128);
     }
 
@@ -51,7 +54,7 @@ function make_main_game_state( game )
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
         // Define constants that affect motion
-        this.SPEED = 250; // missile speed pixels/second
+        this.SPEED = 200; // missile speed pixels/second
         this.TURN_RATE = 5; // turn rate in degrees/frame
         this.WOBBLE_LIMIT = 15; // degrees
         this.WOBBLE_SPEED = 250; // milliseconds
@@ -99,7 +102,7 @@ function make_main_game_state( game )
 
         // Enable physics on the missile
         game.physics.enable(this, Phaser.Physics.ARCADE);
-
+        this.body.immovable = true;
     };
 
     Log.prototype = Object.create(Phaser.Sprite.prototype);
@@ -113,19 +116,29 @@ function make_main_game_state( game )
     var MAX_MISSILES = 3;
     var LOG_COOLDOWN = 0.5;
     var NUM_LOGS = 5;
+    var style = { font: "25px Impact", fill: "#06fb0e",stroke: "#000000", strokeThickness : 5, align: "center" };
+    var logText;
+    var livesText;
+    var ouch; var put; var music;
 
     function create() {
+        ouch = game.add.audio('damage');
+        put = game.add.audio('place');
+        music = game.add.audio('music');
         game.stage.backgroundColor = 0x4488cc;
         game.add.tileSprite(0,0,848,450,'background');
-
+        logText = game.add.text(game.width-80,16,"LOGS: 5", style);
+        livesText = game.add.text(game.width-110,48,"HEALTH: 20", style);
         timer = game.time.create(false);
-        timer.loop(5000,function () {
-            MAX_MISSILES++;
+        timer.loop(7000,function () {
+            if(MAX_MISSILES < 15)
+                MAX_MISSILES++;
         },this);
 
         player = game.add.existing(
             new Follower(game, game.width/2, game.height/2, game.input)
         );
+        player.health = 20;
 
         missileGroup = game.add.group();
         explosionGroup = game.add.group();
@@ -136,10 +149,14 @@ function make_main_game_state( game )
 
         game.input.mouse.capture = true;
         timer.start();
+        music.play();
     }
     
     function update() {
-        if(game.input.activePointer.leftButton.justPressed(30)){
+        var lognum  =NUM_LOGS-logGroup.total;
+        logText.setText("LOGS: "+ lognum, true);
+        livesText.setText("HEALTH: " + player.health,true);
+        if(game.input.activePointer.leftButton.justPressed(25)){
             if(logGroup.total < NUM_LOGS)
                 spawnLog(player.x,player.y);
         }
@@ -164,10 +181,24 @@ function make_main_game_state( game )
             if (pdistance < 50) {
                 m.kill();
                 getExplosion(m.x, m.y);
+                ouch.play();
+                player.health--;
+                if(player.health === 0){
+                    player.kill();
+                }
+                livesText.setText("HEALTH: " + player.health,true);
             }
         }, this);
 
         game.physics.arcade.collide(logGroup,missileGroup, logCallback, null, this);
+        game.physics.arcade.collide(player,logGroup);
+
+        if(player.alive === false){
+            var text = game.add.text(game.width/2,game.height/2,"GAME OVER\nCLICK TO PLAY AGAIN", style);
+            if(game.input.activePointer.leftButton.justPressed(25)) {
+                game.state.restart();
+            }
+        }
     }
 
     Follower.prototype.update = function() {
@@ -302,6 +333,7 @@ function make_main_game_state( game )
 
      function spawnLog(x, y) {
         var log = new Log(game);
+        log.health = 3;
         logGroup.add(log);
         log.x = x;
         log.y = y;
@@ -310,6 +342,7 @@ function make_main_game_state( game )
              player.x, player.y
          );
          log.rotation = targetAngle;
+         put.play();
         return log;
      };
 
