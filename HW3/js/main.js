@@ -140,7 +140,8 @@ function make_main_game_state( game )
     
     function update() {
         if(game.input.activePointer.leftButton.justPressed(30)){
-            spawnLog(player.x,player.y);
+            if(logGroup.total < NUM_LOGS)
+                spawnLog(player.x,player.y);
         }
 
         if (missileGroup.countLiving() < MAX_MISSILES) {
