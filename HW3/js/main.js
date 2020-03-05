@@ -183,6 +183,7 @@ function make_main_game_state( game )
                 getExplosion(m.x, m.y);
                 ouch.play();
                 player.health--;
+                MAX_MISSILES--;
                 if(player.health === 0){
                     player.kill();
                 }
