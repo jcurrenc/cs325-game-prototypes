@@ -91,12 +91,28 @@ function make_main_game_state( game )
     Missile.prototype = Object.create(Phaser.Sprite.prototype);
     Missile.prototype.constructor = Missile;
 
+    var Log = function(game, x, y) {
+        Phaser.Sprite.call(this, game, x, y, 'wood');
+
+        // Set the pivot point for this sprite to the center
+        this.anchor.setTo(0.5, 0.5);
+
+        // Enable physics on the missile
+        game.physics.enable(this, Phaser.Physics.ARCADE);
+
+    };
+
+    Log.prototype = Object.create(Phaser.Sprite.prototype);
+    Log.prototype.constructor = Log;
+
     var timer;
     var player;
     var missileGroup;
     var explosionGroup;
-    var wallGroup;
+    var logGroup;
     var MAX_MISSILES = 3;
+    var LOG_COOLDOWN = 0.5;
+    var NUM_LOGS = 5;
 
     function create() {
         game.stage.backgroundColor = 0x4488cc;
@@ -113,13 +129,20 @@ function make_main_game_state( game )
 
         missileGroup = game.add.group();
         explosionGroup = game.add.group();
+        logGroup = game.add.group();
 
         game.input.x = game.width/2;
         game.input.y = game.height/2;
+
+        game.input.mouse.capture = true;
         timer.start();
     }
     
     function update() {
+        if(game.input.activePointer.leftButton.justPressed(25)){
+            spawnLog(player.x,player.y);
+        }
+
         if (missileGroup.countLiving() < MAX_MISSILES) {
             // Set the launch point to a random location below the bottom edge
             // of the stage
@@ -135,14 +158,15 @@ function make_main_game_state( game )
 
         // If any missile is within a certain distance of the mouse pointer, blow it up
         missileGroup.forEachAlive(function(m) {
-            var distance = game.math.distance(m.x, m.y,
+            var pdistance = game.math.distance(m.x, m.y,
                 player.x, player.y);
-            if (distance < 50) {
+            if (pdistance < 50) {
                 m.kill();
                 getExplosion(m.x, m.y);
             }
         }, this);
 
+        game.physics.arcade.collide(logGroup,missileGroup, logCallback, null, this);
     }
 
     Follower.prototype.update = function() {
@@ -274,6 +298,24 @@ function make_main_game_state( game )
         // Return the explosion itself in case we want to do anything else with it
         return explosion;
     };
+
+     function spawnLog(x, y) {
+        var log = new Log(game);
+        logGroup.add(log);
+        log.x = x;
+        log.y = y;
+         var targetAngle = game.math.angleBetween(
+             game.input.x, game.input.y,
+             player.x, player.y
+         );
+         log.rotation = targetAngle;
+        return log;
+     };
+
+     function logCallback(log, animal) {
+        log.damage(1);
+        animal.kill();
+     };
 
     return { "preload": preload, "create": create, "update": update };
 }
