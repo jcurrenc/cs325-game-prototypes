@@ -7,11 +7,18 @@ function make_main_game_state( game )
         game.load.image('player', 'assets/gfx/player.png');
         game.load.image('smoke', 'assets/gfx/smoke.png');
         game.load.image('rocket', 'assets/gfx/rocket.png');
+        game.load.image('koala', 'assets/koala.png');
+        game.load.image('chicken', 'assets/chicken.png');
+        game.load.image('elephant', 'assets/elephant.png');
+        game.load.image('penguin', 'assets/penguin.png');
+        game.load.image('wood', 'assets/wood.png');
+        game.load.image('carpenter', 'assets/carpenter.png');
+        game.load.image('background', 'assets/background.png');
         game.load.spritesheet('explosion', 'assets/gfx/explosion.png', 128, 128);
     }
 
     var Follower = function(game, x, y, target) {
-        Phaser.Sprite.call(this, game, x, y, 'player');
+        Phaser.Sprite.call(this, game, x, y, 'carpenter');
 
         // Save the target that this Follower will follow
         // The target is any object with x and y properties
@@ -24,7 +31,7 @@ function make_main_game_state( game )
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
         // Define constants that affect motion
-        this.MAX_SPEED = 250; // pixels/second
+        this.MAX_SPEED = 300; // pixels/second
         this.MIN_DISTANCE = 5; // pixels
     };
 
@@ -34,7 +41,8 @@ function make_main_game_state( game )
 
 // Missile constructor
     var Missile = function(game, x, y) {
-        Phaser.Sprite.call(this, game, x, y, 'rocket');
+        var animals = ['koala', 'chicken', 'elephant', 'penguin'];
+        Phaser.Sprite.call(this, game, x, y, animals[game.rnd.integerInRange(0,3)]);
 
         // Set the pivot point for this sprite to the center
         this.anchor.setTo(0.5, 0.5);
@@ -87,11 +95,18 @@ function make_main_game_state( game )
     var player;
     var missileGroup;
     var explosionGroup;
+    var wallGroup;
     var MAX_MISSILES = 3;
 
     function create() {
         game.stage.backgroundColor = 0x4488cc;
+        game.add.tileSprite(0,0,848,450,'background');
+
         timer = game.time.create(false);
+        timer.loop(5000,function () {
+            MAX_MISSILES++;
+        },this);
+
         player = game.add.existing(
             new Follower(game, game.width/2, game.height/2, game.input)
         );
@@ -121,12 +136,13 @@ function make_main_game_state( game )
         // If any missile is within a certain distance of the mouse pointer, blow it up
         missileGroup.forEachAlive(function(m) {
             var distance = game.math.distance(m.x, m.y,
-                game.input.activePointer.x, game.input.activePointer.y);
+                player.x, player.y);
             if (distance < 50) {
                 m.kill();
                 getExplosion(m.x, m.y);
             }
         }, this);
+
     }
 
     Follower.prototype.update = function() {
