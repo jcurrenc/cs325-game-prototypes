@@ -139,7 +139,7 @@ function make_main_game_state( game )
     }
     
     function update() {
-        if(game.input.activePointer.leftButton.justPressed(25)){
+        if(game.input.activePointer.leftButton.justPressed(30)){
             spawnLog(player.x,player.y);
         }
 
