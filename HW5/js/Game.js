@@ -120,6 +120,7 @@ GameStates.makeGame = function( game, shared ) {
 
             if(touchingWall && canJump){
                 player.frame = 16;
+                player.body.velocity.y = 0;
                 if(rightwall.body.touching.left){
                     if(player.scale.x > 0) {
                         player.scale.x *= -1;
