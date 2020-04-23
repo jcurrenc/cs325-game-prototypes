@@ -94,12 +94,13 @@ GameStates.makeGame = function( game, shared ) {
             jumpable = game.add.group();
             ground = game.add.group();
 
-            var groundblock = game.add.sprite(game.width/2, game.height - 40, 'longplat');
+            var groundblock = game.add.sprite(game.width/2, game.height/2+ 50, 'longplat');
             game.physics.enable(groundblock,Phaser.Physics.ARCADE);
             groundblock.anchor.setTo(0.5,0.5);
-            groundblock.scale.x = 6;
+            //groundblock.scale.x = 6;
             groundblock.body.allowGravity = false;
             groundblock.body.immovable = true;
+            groundblock.body.velocity.y = 150;
             ground.add(groundblock);
             jumpable.add(groundblock);
 
