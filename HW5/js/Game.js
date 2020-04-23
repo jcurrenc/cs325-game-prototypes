@@ -122,6 +122,9 @@ GameStates.makeGame = function( game, shared ) {
         },
     
         update: function () {
+            if(player.body.onFloor()){
+                quitGame();
+            }
             leftwall.tilePosition.y += 2;
             rightwall.tilePosition.y += 2;
             background.tilePosition.y += 2;
