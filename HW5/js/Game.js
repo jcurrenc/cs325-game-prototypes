@@ -14,6 +14,7 @@ GameStates.makeGame = function( game, shared ) {
     var DRAG = 600;
     var JUMP_SPEED = -1000;
     var ACCELERATION = 1500;
+    var WALL_BOUNCE = 400;
 
     function quitGame() {
 
@@ -53,7 +54,7 @@ GameStates.makeGame = function( game, shared ) {
             game.input.keyboard.addKeyCapture([
                 Phaser.Keyboard.LEFT,
                 Phaser.Keyboard.RIGHT,
-                Phaser.Keyboard.UP,
+                Phaser.Keyboard.SPACEBAR,
                 Phaser.Keyboard.DOWN
             ]);
             jumpable = game.add.group();
@@ -131,14 +132,14 @@ GameStates.makeGame = function( game, shared ) {
                 }
             }
 
-            if(game.input.keyboard.isDown(Phaser.Keyboard.UP) && canJump && game.input.keyboard.downDuration(Phaser.Keyboard.UP)){
+            if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && canJump && game.input.keyboard.downDuration(Phaser.Keyboard.SPACEBAR)){
                 player.body.velocity.y = JUMP_SPEED;
                 if(touchingWall){
                     if(leftwall.body.touching.right) {
-                        player.body.velocity.x = 400;
+                        player.body.velocity.x = WALL_BOUNCE;
                     }
                     else{
-                        player.body.velocity.x = -400;
+                        player.body.velocity.x = -WALL_BOUNCE;
                     }
                 }
                 player.animations.play('jump');
