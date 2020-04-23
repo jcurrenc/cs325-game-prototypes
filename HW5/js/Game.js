@@ -14,7 +14,7 @@ GameStates.makeGame = function( game, shared ) {
     var DRAG = 600;
     var JUMP_SPEED = -1000;
     var ACCELERATION = 1500;
-    var WALL_BOUNCE = 400;
+    var WALL_BOUNCE = 500;
 
     function quitGame() {
 
@@ -116,7 +116,6 @@ GameStates.makeGame = function( game, shared ) {
                     player.frame = 17;
                 }
             }
-            console.log(touchingWall);
 
             if(touchingWall && canJump){
                 player.frame = 16;
