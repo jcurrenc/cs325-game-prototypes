@@ -2,18 +2,22 @@
 
 GameStates.makeGame = function( game, shared ) {
     // Create your own variables.
+    var timer = null;
+    var background = null;
     var leftwall, rightwall;
     var player = null;
     var ground = null;
     var jumpable = null;
     var wall = null;
+    var boulders = null;
+    var platforms = null;
     var canJump = false;
     var touchingWall = false;
-    var GRAVITY = 2600;
+    var GRAVITY = 2000;
     var MAX_SPEED = 500;
-    var DRAG = 600;
+    var DRAG = 2000;
     var JUMP_SPEED = -1000;
-    var ACCELERATION = 1500;
+    var ACCELERATION = 2000;
     var WALL_BOUNCE = 500;
 
     function quitGame() {
@@ -25,12 +29,42 @@ GameStates.makeGame = function( game, shared ) {
         game.state.start('MainMenu');
 
     }
-    
+
     return {
     
         create: function () {
+            platforms = game.add.group();
+            timer = game.time.create(false);
+            timer.loop(1500,
+               function() {
+                    console.log('Spawning platform');
+                    var coin = Math.floor(Math.random() * 2) + 1;
+                    var xpos, pos, plat;
+                    if(coin === 1){
+                        xpos = [150,200,250,300,350,400,450,500,550,600];
+                        pos = Math.floor(Math.random() * 10);
+                        console.log(xpos[pos]);
+                        plat = game.add.sprite(xpos[pos]-50, 50,'shortplat');
+                    }
+                    else{
+                        xpos = [200,300,400,500,600];
+                        pos = Math.floor(Math.random() * 5);
+                        console.log(xpos[pos]);
+                        plat = game.add.sprite(xpos[pos]-100,50,'longplat');
+                    }
+                    plat.anchor.setTo(0.5,0.5);
+                    game.physics.enable(plat,Phaser.Physics.ARCADE);
+                    plat.body.allowGravity = false;
+                    plat.body.allowRotation = false;
+                    plat.body.immovable = true;
+                    plat.body.velocity.y = 200;
+                    game.world.bringToTop(plat);
+                    platforms.add(plat);
+                    jumpable.add(plat);
+        }, this);
 
-            // Create a sprite at the center of the screen using the 'logo' image.
+            background = game.add.tileSprite(0,0,600,900,'background');
+            game.world.sendToBack(background);
             player = game.add.sprite( game.world.centerX, game.world.centerY, 'player' );
 
 
@@ -82,12 +116,15 @@ GameStates.makeGame = function( game, shared ) {
             wall.add(leftwall);
             jumpable.add(leftwall);
             jumpable.add(rightwall);
+            //spawnPlat();
+            timer.start();
         },
     
         update: function () {
             leftwall.tilePosition.y += 2;
             rightwall.tilePosition.y += 2;
-
+            background.tilePosition.y += 2;
+            game.physics.arcade.collide(player,platforms);
             game.physics.arcade.collide(player,ground);
             canJump = game.physics.arcade.collide(player,jumpable);
             game.physics.arcade.collide(wall,player);
@@ -146,6 +183,8 @@ GameStates.makeGame = function( game, shared ) {
             }
 
         }
+
+
 
     };
 };

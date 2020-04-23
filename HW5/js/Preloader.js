@@ -33,6 +33,7 @@ GameStates.makePreloader = function( game ) {
             game.load.image('wall', 'assets/env/wall.png');
             game.load.image('shortplat', 'assets/env/shortplat.png');
             game.load.image('longplat', 'assets/env/longplat.png');
+            game.load.image('background', 'assets/env/background.png');
         },
     
         create: function () {
