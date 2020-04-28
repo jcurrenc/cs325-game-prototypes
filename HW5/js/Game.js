@@ -44,13 +44,13 @@ GameStates.makeGame = function( game, shared ) {
                         xpos = [150,200,250,300,350,400,450,500,550,600];
                         pos = Math.floor(Math.random() * 10);
                         console.log(xpos[pos]);
-                        plat = game.add.sprite(xpos[pos]-50, 50,'shortplat');
+                        plat = game.add.sprite(xpos[pos]-50, 10,'shortplat');
                     }
                     else{
                         xpos = [200,300,400,500,600];
                         pos = Math.floor(Math.random() * 5);
                         console.log(xpos[pos]);
-                        plat = game.add.sprite(xpos[pos]-100,50,'longplat');
+                        plat = game.add.sprite(xpos[pos]-100,10,'longplat');
                     }
                     plat.anchor.setTo(0.5,0.5);
                     game.physics.enable(plat,Phaser.Physics.ARCADE);
