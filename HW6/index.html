@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Phaser Basic Project Template</title>
+	<script src="js/phaser.min.js"></script>
+	<!-- Boot.js must come first since it creates the BasicGame object
+	that stores all the states. -->
+	<script src="js/Boot.js"></script>
+	<script src="js/Preloader.js"></script>
+	<script src="js/MainMenu.js"></script>
+	<script src="js/Game.js"></script>
+	<!-- main.js must come last since it references the other ones. -->
+	<script src="js/main.js"></script>
+
+<style>
+body
+{
+    color: #777;
+    font-family: "Avenir", Verdana, sans-serif;
+}
+#readme
+{
+    margin-top: 10px;
+}
+</style>
+
+</head>
+<body>
+<div id="game"></div>
+<div id="readme">
+<h2>Cat Climber</h2>
+
+<ul>
+<li><strong>Originality:</strong>
+Cat Climber combines platforming and survival elements to challenge players to climb as high as they can.
+</li>
+
+<li><strong>Technical Merit:</strong>
+I use sprite tiles to simulate the map scrolling upwards and timers to create random obstacles to get in the player's way.
+</li>
+
+<li><strong>Prototype Postmortem:</strong>
+I learned how to use animations in Phaser and how to set up different interactions with groups.
+</li>
+
+	<li><strong>Prototype Assets:</strong>
+		I made about half the sprites and the other half are listed below.
+		<ul>
+			<li>Cat sprite: <a href="https://opengameart.org/content/cat-dog-free-sprites">Cat Sprites</a></li>
+			<li>Jump sound: <a href="https://opengameart.org/content/8-bit-jump-1">Jump sound</a></li>
+			<li>Cat meow: <a href="https://opengameart.org/content/meow">Cat meow</a></li>
+			<li>Ground: <a href="https://www.dlf.pt/ddetail/iToohio_grass-clipart-row-platforms-sprite-hd-png-download/">Grass Clipart Row</a></li>
+			<li>Wall: <a href="https://br.freepik.com/vetores-gratis/seamless-desenhos-animados-textura-de-pedra_976364.htm">Seamless desenhos animados textura de pedra Vetor grátis</a></li>
+			<li>Boulder: <a href="https://www.kissclipart.com/rock-sprite-png-clipart-clip-art-sxxdkg/">rock sprite png clipart Clip art </a></li>
+			<li>Clouds: <a href="https://www.vecteezy.com/vector-art/570474-cartoon-clouds-isolated-on-blue-sky-panorama-collection-cloudscape-in-blue-sky-white-cloud-illustration">Cartoon clouds isolated on blue sky panorama</a></li>
+		</ul>
+	</li>
+
+<li><strong>Prototype Closest Other Game:</strong>
+	This game was made to resemble a flash game called "Escape" that I played a long time ago.
+<ul>
+<li>The code for this example is adapted from the <a href="https://github.com/photonstorm/phaser/tree/v2.6.2/resources/Project%20Templates/Basic">Phaser Basic Project Template</a></li>
+</ul>
+</li>
+
+<li><strong>High Concept:</strong>
+	This is a game where you must survive as long as possible by jumping around and avoiding threats as they appear.
+</li>
+
+<li><strong>Theme:</strong>
+State which of the Storymatic themes you used.
+</li>
+
+<li><strong>Mandated Variety:</strong>
+	Input: Keyboard
+	Randomness: a lot of randomness
+	Play style: Achiever
+	Genre: side-scroller
+</li>
+
+<li><strong>Prototype Goal:</strong>
+	I want the player to have a challenging mechanical experience.
+</li>
+
+<li><strong>Player Experience Goals:</strong>
+What experience do you want players to have when playing your game?
+</li>
+
+<li><strong>Gameplay:</strong>
+	The player can control their character by jumping. They can jump from side to side, must avoid obstacles, and not fall off the screen. THe player has full control of the character in the air and must decide on a safe path before they fall.
+</li>
+
+<li><strong>Strategies:</strong>
+Players will want to take advantage of waiting on a wall to see what obstacles spawn and make a plan to avoid them.
+</li>
+
+<li><strong>Story/Setting/Premise:</strong>
+A paragraph about the world your game is set in and who the characters are. What makes the game world and its occupants unique and interesting? Do the tokens represent something? If the game has a backstory, mention it here. If the game is abstract, then say so.
+How will the dramatic tension interact with the gameplay tension?
+</li>
+
+<li><strong>Target Audience:</strong>
+	I'm trying to reach people who enjoy skill-based games that require a lot of timing.
+</li>
+
+<li><strong>Play Time:</strong>
+	The game lasts as long as the player survives.
+</li>
+
+</ul>
+</div>
+</body>
+</html>
